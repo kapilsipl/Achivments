@@ -1,0 +1,30 @@
+{
+  "name": "taskmanager",
+  "version": "1.0.0",
+  "description": "To Do list App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapilsipl/Task-Manager.git"
+  },
+  "keywords": [
+    "To",
+    "do",
+    "list",
+    "Application",
+    "for",
+    "Task",
+    "manager",
+    "Task",
+    "managment"
+  ],
+  "author": "SIPL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kapilsipl/Task-Manager/issues"
+  },
+  "homepage": "https://github.com/kapilsipl/Task-Manager#readme"
+}
