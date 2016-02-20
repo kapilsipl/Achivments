@@ -1,0 +1,17 @@
+<label class="items-list-item" dir-paginate="item in items| filter : filterItem|itemsPerPage:10" ng-drop="true" ng-drop-success="onDropComplete($index, $data,$event)">
+    <div ng-drag="true" ng-drag-data="item" ng-class="item.tasks">
+    <input type="checkbox" value="{{item.tasks}}" class="items-list-cb"/>
+    <span class="items-list-mark"></span>
+    <span class="items-list-desc " ng-class="{strike:item.status == 2}">{{item.tasks}}</span>
+    <span>
+        <a ng-click="deleteItem(item.id)" class="pull-right red" title="Delete">
+            <span class="glyphicon glyphicon-remove-sign"></span>
+        </a>            
+    </span>
+    <span>
+        <a ng-click="editItem(item)" class="pull-right red" title="Edit">
+            <span class="glyphicon glyphicon-edit padding-right-10"></span>
+        </a> 
+    </span>
+    </div>
+</label>

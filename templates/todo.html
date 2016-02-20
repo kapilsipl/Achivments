@@ -1,42 +1,47 @@
-<section class="items">
-	
-	<header class="items-header">
-		<div class="row">
-			<div class="col-sm-9 col-xs-12">
+<section class="items" ng-controller="todoController">
+    <header class="items-header">
+        <div class="row">
+            <div class="col-sm-9 col-xs-12">
+                <form class="form-inline" name="todoList" novalidate >
+                    <div class="form-actions">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="itemInput" ng-model="itemInput" placeholder="Add New Todo" size="40" ng-maxlength="50" required/>
+                            <span style="color:red" ng-bind="error"></span>
+                            <span style="color:red" ng-show="todoList.itemInput.$dirty && todoList.itemInput.$invalid">
+                                <span ng-show="todoList.itemInput.$error.required">Required</span>
+                            </span>
+                            <div ng-hide="addtodo" class="input-group-btn">
+                                <button class="btn btn-info" ng-click="addItem(todoList)" ng-disabled="todoList.itemInput.$dirty && todoList.itemInput.$invalid" type="submit" itemInput = null" >
+                                    <i class="fa fa-plus"></i>&nbsp;Add Todo
+                                </button>
+                                 
+                            </div>
+                            <div ng-show="eidttodo" class="input-group-btn">
+                                <button class="btn btn-info" ng-click="updateTodo(todoList)"    type="submit" itemInput = null" >
+                                   
+                                    <i class="fa fa-plus"></i>&nbsp;Edit Todo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                
+   
 
-				<form class="form-inline" name="todoList">
-					<div class="form-actions">
-						<div class="input-group">
-							<input type="text" class="form-control" ng-model="itemInput" placeholder="Add New Todo" autofocus required />
-							<div class="input-group-btn">
-								<button class="btn btn-info" type="submit" ng-click="addItem(itemInput); itemInput = null" ng-disabled="todoList.$invalid">
-									<i class="fa fa-plus"></i>&nbsp;Add Todo
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
-
-			</div>
-
-			<div class="col-sm-3 hidden-xs">
-				<input type="text" ng-model="filterItem" class="form-control" placeholder="Filter Todos" />
-			</div>
-		</div>
-	</header>
-
-	<fieldset class="items-list">
-		<label class="items-list-item" ng-repeat="item in items track by $index | filter : filterItem">
-			<input
-			type="checkbox"
-			value="{{item.status}}"
-			ng-checked="item.status==2"
-			ng-click="changeStatus(item.id,item.status,item.tasks)"
-			class="items-list-cb"/>
-			<span class="items-list-mark"></span>
-			<span class="items-list-desc" ng-class="{strike:item.STATUS==2}">{{item.tasks}}</span> 
-			<a ng-click="deleteItem(item.id)" class="pull-right red"><i class="fa fa-minus-circle"></i></a> 
-		</label>
-	</fieldset>	
-
+            </div>
+            <div class="col-sm-3 hidden-xs">
+                <input type="text" ng-model="filterItem" class="form-control" placeholder="Filter Todos" />
+            </div>
+        </div>
+    </header>
+    <fieldset class="items-list">
+        <todo-task></todo-task>	
+    </fieldset>	
+    
+   <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
 </section>

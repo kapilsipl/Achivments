@@ -136,7 +136,6 @@ body{
   }
 }
 
-
 .items-list-cb:checked ~ .items-list-desc {
   color: #34bf6e;
   text-decoration: line-through;
@@ -154,4 +153,7 @@ body{
 }
 .mt-10 {
   margin-top: 10px;
+}
+.padding-right-10 {
+  padding-right: 10px;
 }

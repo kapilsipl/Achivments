@@ -1,0 +1,20 @@
+<!doctype html>
+<html ng-app="plunker" >
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS Inline Edit</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.js"></script>
+  <script src="app.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <h1>Title</h1>
+  
+  <p>Click on a title or edit link to edit. Cancel edit and changes should revert to previous value. Press save to trigger some other handler.</p> </p>
+  
+  <ul>
+    <li ng-repeat="todo in todos" inline-edit="todo.title" on-save="updateTodo(todo.title)" on-cancel="cancelEdit(todo.title)"></li>
+  </ul>
+  
+  <div>{{todos}}</div>
+</body>
+</html>

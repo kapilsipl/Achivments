@@ -1,48 +1,67 @@
 //Define an angular module for our app
-var app = angular.module('todoApp', []);
+var app = angular.module('todoApp', ['toaster','ngDraggable','angularUtils.directives.dirPagination']);
 
-app.controller('todoController', function($scope, $filter, $http) {
+app.controller('todoController', function($scope, $filter, $http,toaster) {
 	
-  // Load all items 
+  // Load all task 
   getItem(); 
   function getItem(){  
-  $http.post("ajax/item.php").success(function(data){
+	 
+  $http.post("ajax/item.php", {action : 'getAll'}).success(function(data){
         $scope.items = data;
+        $scope.onDropComplete = function (index, obj, evt) {
+                    var otherObj = $scope.items[index];
+                    var otherIndex = $scope.items.indexOf(obj);
+                    $scope.items[index] = obj;
+                    $scope.items[otherIndex] = otherObj;
+                }
+                
+                
        });
   };
   
-  // Add Item
-  $scope.addItem = function (item) {
-    $http.post("ajax/item.php?action=addItem&item="+item).success(function(data){
+  // Add new task
+  $scope.addItem = function () {
+	if($scope.itemInput!=undefined){
+	 $http.post("ajax/item.php", {action : 'addItem', item: $scope.itemInput }).success(function(data){
         getItem();
+        toaster.pop('success', "Record added succesfully");
         $scope.itemInput = "";
       });
+  }
+  
+  
+  
   };
   
-  // Delete Item
+  // Delete task
   $scope.deleteItem = function (item) {
     if(confirm("Are you sure to delete this item?")){
-    $http.post("ajax/item.php?action=deleteItem&itemID="+item).success(function(data){
+    $http.post("ajax/item.php", {action: 'deleteItem',itemID:item}).success(function(data){
+		 toaster.pop('success', "Record deleted succesfully");
         getItem();
       });
     }
   };
  
-  // Clear Item
-  $scope.clearItem = function () {
-    if(confirm("Delete all checked items?")){
-    $http.post("ajax/item.php?action=clearItem").success(function(data){
-        getItem();
+ // Edit task
+ $scope.editItem = function(item){
+	 $scope.addtodo=true;
+	 $scope.eidttodo=true;
+	 $scope.editid = item.id;
+	 $scope.itemInput = item.tasks;	 	 	 
+	 }	 
+	 
+	 $scope.updateTodo= function(item){
+		$http.post("ajax/item.php",{action: 'updateItem','itemID':$scope.editid,'status':$scope.itemInput}).success(function(data){
+       getItem();
+        toaster.pop('success', "Record updated succesfully");
+        $scope.itemInput = "";
+         $scope.addtodo=false;
+	    $scope.eidttodo=false;
       });
-    }
-  };  
-
-  // Update item
-  $scope.changeStatus = function(item, status, task) {
-    if(status=='2'){status='0';}else{status='2';}
-      $http.post("ajax/item.php?action=updateItem&itemID="+item+"&status="+status).success(function(data){
-        getItem();
-      });
-  };
-
+  }
+	 
+// Change task         
+ 
 });
